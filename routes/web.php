@@ -1,5 +1,7 @@
 <?php
 
+use App\Models\User;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -15,4 +17,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('welcome');
+});
+
+Route::post('/signin',  function(Request $request) {
+    $email = $request->input('username');
+    $password = $request->input('password');
+    $user = User::where('email', $email)->first();
+
+    if ($password === $user->password) {
+        return $user->getRememberToken();
+    }
 });
