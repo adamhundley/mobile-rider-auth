@@ -41,3 +41,9 @@ Route::post('/signin',  function(Request $request) {
         return response($user->getRememberToken(), 200)->header('Content-Type', 'text/plain');
     }
 });
+Route::post('/signout',  function(Request $request) {
+    $remember_token = $request->bearerToken();
+    $user = User::where('remember_token', $remember_token)->first();
+    $user->last_logout = date('Y-m-d H:i:s');
+    $user->save();
+});
