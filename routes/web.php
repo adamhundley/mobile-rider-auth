@@ -23,8 +23,21 @@ Route::post('/signin',  function(Request $request) {
     $email = $request->input('username');
     $password = $request->input('password');
     $user = User::where('email', $email)->first();
+    // Would love to check password this way but not working for some reason?!
+    //  if (Hash::check($password, $user->password)) {
+    //  return response($user->getRememberToken(), 200)->header('Content-Type', 'text/plain');
+    // }
+    // Also would love something like this but having issues as well :shrug:
+    // if (Auth::attempt(['email' => $email, 'password' => $password])) {
+        //  return response($user->getRememberToken(), 200)->header('Content-Type', 'text/plain');
+    // }
+    // if (Auth::attempt($credentials)) {
+    //     $request->session()->regenerate();
+    //
+    //     return redirect()->intended('dashboard');
+    // }
 
     if ($password === $user->password) {
-        return $user->getRememberToken();
+        return response($user->getRememberToken(), 200)->header('Content-Type', 'text/plain');
     }
 });
