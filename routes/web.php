@@ -36,7 +36,6 @@ Route::post('/signin',  function(Request $request) {
     //
     //     return redirect()->intended('dashboard');
     // }
-
     if ($password === $user->password) {
         return response($user->getRememberToken(), 200)->header('Content-Type', 'text/plain');
     }
